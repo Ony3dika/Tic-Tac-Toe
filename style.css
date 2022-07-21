@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comfortaa', cursive;
+}
+
+.main{
+    background-color: rgb(25, 42, 50);
+    min-height: 100vh;
+}
+
+.sign{
+    font-size: 30px;
+    color: rgb(49, 196, 190);
+    letter-spacing: 5px;
+}
+
+.player-turn{
+    background-color: rgb(31, 53, 64);
+    border-radius: 10px;
+    width: 150px;
+    text-align: center;
+    box-shadow: 0px 5px 0px 0px rgb(16, 33, 41);
+}
+
+.retry{
+    background-color: rgb(168, 190, 201);
+    border-radius: 10px;
+    width: 50px;
+    border: none;
+    text-align: center;
+    box-shadow: 0px 5px 0px 0px  rgba(181, 210, 224, 0.597);
+}
+
+.tile{
+    background-color:rgb(31, 53, 64);
+    border-radius: 10px;
+    aspect-ratio: 1/1;
+    box-shadow: 0px 7px 0px 0px rgb(16, 33, 41);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tle{
+    height: 70px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.tee{
+    background-color: rgb(49, 196, 190);
+}
+
+.sil{
+    background-color: rgb(168, 190, 201);
+}
+
+.yel{
+    background-color: rgb(242, 178, 55);
+}
+
+.record{
+    margin-top: 1rem;
+}
+
+.mess{
+    height: 100vh;
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.559);
+    display: none;
+}
+
+.dun{
+    color: white;
+    background-color: rgb(31, 53, 64);
+    height: 300px;
+    margin-top: 200px;
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.dun p{
+    margin-top: 4rem
+}
+
+.winner{
+    color: rgb(44, 198, 190);
+}
+
+.quit{
+    padding: 0.5rem 2rem; 
+    border: none;
+    background-color: rgb(168, 190, 201);
+    border-radius: 10px;
+}
+
+.next{
+    padding: 0.5rem 1.5rem; 
+    border: none;
+    margin-left: 3rem;
+    background-color: rgb(241, 177, 53);
+    border-radius: 10px;
+}
+
