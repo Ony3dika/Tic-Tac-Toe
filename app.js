@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     let tiles = Array.from(document.querySelectorAll('.tile')),
         playerDisplay = document.querySelector('.player-turn'),
-        resetButton = document.querySelectorAll('.retry'),
+        resetButton = document.querySelector('.retry'),
         show=document.querySelector('.mess'),
-        rett=document.querySelector('.next'),
+        quit=document.querySelector('.quit'),
         announcer = document.querySelector('.winner');
 
     let board = ['', '', '', '', '', '', '', '', ''];
@@ -74,6 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
         announcer.classList.remove('hide');
     };
 
+    quit.addEventListener('click',function(e){
+        window.location.href ='https://play.google.com/store/games?&utm_source=emea_Med&utm_medium=hasem&utm_content=May2021&utm_campaign=Evergreen&pcampaignid=MKT-EDR-emea-ng-1001280-Med-hasem-py-Evergreen-May2021-Text_Search_BKWS%7CONSEM_kwid_43700008633186355&gclid=Cj0KCQjw_viWBhD8ARIsAH1mCd5L_7VMjh9zgLA_byhFl_ZFa1O-B7lkaj7REUcnwVPL1IcnMtfyZoUaAioCEALw_wcB&gclsrc=aw.ds'
+    })
+
     const isValidAction = (tile) => {
         if (tile.innerText === 'X' || tile.innerText === 'O'){
             return false;
@@ -127,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resetButton.addEventListener('click', resetBoard);
 
-    rett.addEventListener('click', resetBoard)
 });
 
 
