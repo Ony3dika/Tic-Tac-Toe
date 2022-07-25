@@ -44,11 +44,6 @@ function turn(squareId,player){
     //player.style.Color="white"
 
     let gameWon = checkWin(origBoard,player)
-
-    if (gameWon){
-        document.querySelector(".mess").getElementsByClassName.display="block"
-    }
-
 }
 
 function checkWin(board,player){
@@ -86,10 +81,6 @@ function bestSpot(){
     return emptySquares()[0];
 }
 
-function declareWinner(){
-    document.querySelector(".mess").style.display="block";
-}
-
 function checkTie(){
     if (emptySquares().length == 0){
         for (var i = 0; i < cell.length; i++){
@@ -97,7 +88,6 @@ function checkTie(){
         }
     }
 
-    declareWinner("Tie")
 }
 
 
