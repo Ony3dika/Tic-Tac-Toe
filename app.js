@@ -1,65 +1,106 @@
-// console.log("Muna")
 
-// window.addEventListener("DOMContentLoaded",game)
+var origBoard;
 
-// function game(){
-//     let tiles=Array.from(document.querySelectorAll(".tile")),
-//         playerTurn=document.querySelector(".player-turn"),
-//         restart=document.querySelector(".retry"),
-//         decide=document.querySelector(".decision");
+let huPlayer='x',
+    ai='o',
+    winComb=[
+        [0,1,2], 
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [6,4,2]
+    ];
 
-//         let board=['','','','','','','','',''],
-//             currentPlayer = "X",
-//             gameActive = true;
+let cell=document.querySelectorAll(".tile")
+
+game();
+
+function game(){
+    origBoard=Array.from(Array(9).keys())
+    for (let i=0; i<cell.length; i++){
+        cell[i].innerText = ''
+        cell[i].addEventListener('click', nextTurn)
+        
+    }
+}
+
+nextTurn()
+
+function nextTurn(square){
+    if (typeof origBoard[square.target.id] == 'number'){
+        turn(square.target.id, huPlayer) 
+    if (!checkTie()) turn(bestSpot(), aiPlayer)
+    }
+   
+}
 
 
-//     const winConditions = [
-//         [0,1,2],
-//         [3,4,5],
-//         [6,7,8],
-//         [0,3,6],
-//         [1,4,7],
-//         [2,5,8],
-//         [0,4,8],
-//         [2,4,6], 
-//     ]
+function turn(squareId,player){
+    origBoard[squareId] = player;
+    let sym = document.getElementById(squareId).textContent = player
+    //player.style.Color="white"
 
-//     function handleResultValidation(){
-//         let roundWon =false;
-//         for (let i=0; i<=7; i++){
-//             let winCondition= winConditions[i],
-//                 a= board[winCondition[0]],
-//                 b= board[winCondition[1]],
-//                 c= board[winCondition[2]];
-//         if (a === '' || b === '' || c === ''){
-//             continue;
-//         }  
+    let gameWon = checkWin(origBoard,player)
 
-//         if (a === b && b === c){
-//             roundWon= true;
-//             break
-//         }
-//         }
-//     }
+    if (gameWon){
+        document.querySelector(".mess").getElementsByClassName.display="block"
+    }
 
-//     let changePlayer = function(){
-//         playerTurn.classList.remove(`player${currentPlayer}`);
-//         currentPlayer = currentPlayer === 'X' ? 'O' : 'X'
-//         playerTurn.innerText=currentPlayer
-//         playerTurn.classList.add(`player${currentPlayer}`)
-//     }
+}
 
-//     tiles.forEach(function(tile,index){
-//         tile.addEventListener("click",function(tile,index){
-//             if (isValid(tile) && isgameActive){
-//                 tile.innerText= currentPlayer;
-//                 tile.classList.add(`player${currentPlayer}`);
-//                 updateboard(index);
-//                 handleResultValidation();
-//                 changePlayer();
-//             }
-//         })
-//     })
+function checkWin(board,player){
+    let plays = board.reduce((a,e,i)=>(e===player) ? a.concat(i) : a,[]);
 
-// restart.addEventListener("click", reset)
-// }
+    let gameWon= null;
+
+    for (let [index,win] of winComb.entries()){
+       if (win.every(elem => plays.indexOf(elem > -1))) {
+        gameWon = {index, player : player}
+
+        break;
+       }
+    }
+
+    return gameWon;
+}
+
+
+function gameOver(gameWon){
+    for (let index of winComb[gameWon,index]){
+        document.getElementById(index).style.backgroundColor = gameWon.player == huPlayer ? 'blue' : 'red';
+    }
+
+    for(var i = 0; i<cell.length; i++){
+        cell[i].removeEventListener('click',nextTurn)
+    }
+}
+
+function emptySquares(){
+    return origBoard.filter(s => typeof s =='number')
+}
+
+function bestSpot(){
+    return emptySquares()[0];
+}
+
+function declareWinner(){
+    document.querySelector(".mess").style.display="block";
+}
+
+function checkTie(){
+    if (emptySquares().length == 0){
+        for (var i = 0; i < cell.length; i++){
+            cell[i].removeEventListener("click", nextTurn)
+        }
+    }
+
+    declareWinner("Tie")
+}
+
+
+
+
+
