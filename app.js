@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
         show=document.querySelector('.mess'),
         quit=document.querySelector('.quit'),
         nxt=document.querySelector('.next'),
+        PX=document.querySelector('.rx'),
+        PO=document.querySelector('.ro'),
+        PT=document.querySelector('.rt'),
         announcer = document.querySelector('.winner');
 
     let board = ['', '', '', '', '', '', '', '', ''];
@@ -65,12 +68,15 @@ document.addEventListener('DOMContentLoaded', () => {
         switch(type){
             case PLAYERO_WON:
                 announcer.innerHTML = 'Player <span class="playerO">O</span> Won';
+                PO.innerText += +1
                 break;
             case PLAYERX_WON:
                 announcer.innerHTML = 'Player <span class="playerX">X</span> Won';
+                PX.innerText += +1
                 break;
             case TIE:
                 announcer.innerText = 'Tie';
+                PT.innerText += +1
         }
         announcer.classList.remove('hide');
     };
