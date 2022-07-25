@@ -1,95 +1,134 @@
+document.addEventListener('DOMContentLoaded', () => {
+    let tiles = Array.from(document.querySelectorAll('.tile')),
+        playerDisplay = document.querySelector('.player-turn'),
+        resetButton = document.querySelectorAll('.retry'),
+        show=document.querySelector('.mess'),
+        rett=document.querySelector('.next'),
+        announcer = document.querySelector('.winner');
 
-var origBoard;
+    let board = ['', '', '', '', '', '', '', '', ''];
+    let currentPlayer = 'X';
+    let isGameActive = true;
 
-let huPlayer='x',
-    ai='o',
-    winComb=[
-        [0,1,2], 
-        [3,4,5],
-        [6,7,8],
-        [0,3,6],
-        [1,4,7],
-        [2,5,8],
-        [0,4,8],
-        [6,4,2]
+    const PLAYERX_WON = 'PLAYERX_WON';
+    const PLAYERO_WON = 'PLAYERO_WON';
+    const TIE = 'TIE';
+
+
+    /*
+        Indexes within the board
+        [0] [1] [2]
+        [3] [4] [5]
+        [6] [7] [8]
+    */
+
+    const winningConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
     ];
 
-let cell=document.querySelectorAll(".tile")
+    function handleResultValidation() {
+        let roundWon = false;
+        for (let i = 0; i <= 7; i++) {
+            const winCondition = winningConditions[i];
+            const a = board[winCondition[0]];
+            const b = board[winCondition[1]];
+            const c = board[winCondition[2]];
+            if (a === '' || b === '' || c === '') {
+                continue;
+            }
+            if (a === b && b === c) {
+                roundWon = true;
+                break;
+            }
+        }
 
-game();
+    if (roundWon) {
+            announce(currentPlayer === 'X' ? PLAYERX_WON : PLAYERO_WON);
+            isGameActive = false;
+            return;
+        }
 
-function game(){
-    origBoard=Array.from(Array(9).keys())
-    for (let i=0; i<cell.length; i++){
-        cell[i].innerText = ''
-        cell[i].addEventListener('click', nextTurn)
-        
-    }
-}
-
-nextTurn()
-
-function nextTurn(square){
-    if (typeof origBoard[square.target.id] == 'number'){
-        turn(square.target.id, huPlayer) 
-    if (!checkTie()) turn(bestSpot(), aiPlayer)
-    }
-   
-}
-
-
-function turn(squareId,player){
-    origBoard[squareId] = player;
-    let sym = document.getElementById(squareId).textContent = player
-    //player.style.Color="white"
-
-    let gameWon = checkWin(origBoard,player)
-}
-
-function checkWin(board,player){
-    let plays = board.reduce((a,e,i)=>(e===player) ? a.concat(i) : a,[]);
-
-    let gameWon= null;
-
-    for (let [index,win] of winComb.entries()){
-       if (win.every(elem => plays.indexOf(elem > -1))) {
-        gameWon = {index, player : player}
-
-        break;
-       }
+    if (!board.includes(''))
+        announce(TIE);
     }
 
-    return gameWon;
-}
+    const announce = (type) => {
+        show.style.display='block'
+        switch(type){
+            case PLAYERO_WON:
+                announcer.innerHTML = 'Player <span class="playerO">O</span> Won';
+                break;
+            case PLAYERX_WON:
+                announcer.innerHTML = 'Player <span class="playerX">X</span> Won';
+                break;
+            case TIE:
+                announcer.innerText = 'Tie';
+        }
+        announcer.classList.remove('hide');
+    };
 
+    const isValidAction = (tile) => {
+        if (tile.innerText === 'X' || tile.innerText === 'O'){
+            return false;
+        }
 
-function gameOver(gameWon){
-    for (let index of winComb[gameWon,index]){
-        document.getElementById(index).style.backgroundColor = gameWon.player == huPlayer ? 'blue' : 'red';
+        return true;
+    };
+
+    const updateBoard =  (index) => {
+        board[index] = currentPlayer;
     }
 
-    for(var i = 0; i<cell.length; i++){
-        cell[i].removeEventListener('click',nextTurn)
+    const changePlayer = () => {
+       // playerDisplay.classList.remove(`player${currentPlayer}`);
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        playerDisplay.textContent =`${currentPlayer}'s Turn`;
+        playerDisplay.style.color='rgb(168, 190, 201)'
+        playerDisplay.style.paddingTop='0.7rem'
+        //playerDisplay.classList.add(`player${currentPlayer}`);
     }
-}
 
-function emptySquares(){
-    return origBoard.filter(s => typeof s =='number')
-}
-
-function bestSpot(){
-    return emptySquares()[0];
-}
-
-function checkTie(){
-    if (emptySquares().length == 0){
-        for (var i = 0; i < cell.length; i++){
-            cell[i].removeEventListener("click", nextTurn)
+    const userAction = (tile, index) => {
+        if(isValidAction(tile) && isGameActive) {
+            tile.innerText = currentPlayer;
+            tile.classList.add(`player${currentPlayer}`);
+            updateBoard(index);
+            handleResultValidation();
+            changePlayer();
         }
     }
+    
+    const resetBoard = () => {
+        board = ['', '', '', '', '', '', '', '', ''];
+        isGameActive = true;
+        announcer.classList.add('hide');
 
-}
+        if (currentPlayer === 'O') {
+            changePlayer();
+        }
 
+        tiles.forEach(tile => {
+            tile.innerText = '';
+            tile.classList.remove('playerX');
+            tile.classList.remove('playerO');
+        });
+    }
+
+    tiles.forEach( (tile, index) => {
+        tile.addEventListener('click', () => userAction(tile, index));
+    });
+
+    resetButton.addEventListener('click', resetBoard);
+
+    rett.addEventListener('click', resetBoard)
+});
 
 
 
