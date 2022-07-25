@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         announce(TIE);
     }
 
-    const announce = (type) => {
+    const announce = function(type){
         show.style.display='block'
         switch(type){
             case PLAYERO_WON:
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href ='https://www.google.com'
     })
 
-    const isValidAction = (tile) => {
+    const isValidAction = function(tile) {
         if (tile.innerText === 'X' || tile.innerText === 'O'){
             return false;
         }
@@ -86,11 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     };
 
-    const updateBoard =  (index) => {
+    const updateBoard =  function(index) {
         board[index] = currentPlayer;
     }
 
-    const changePlayer = () => {
+    const changePlayer = function(){
        // playerDisplay.classList.remove(`player${currentPlayer}`);
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
         playerDisplay.textContent =`${currentPlayer}'s Turn`;
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //playerDisplay.classList.add(`player${currentPlayer}`);
     }
 
-    const userAction = (tile, index) => {
+    const userAction = function (tile, index){
         if(isValidAction(tile) && isGameActive) {
             tile.innerText = currentPlayer;
             tile.classList.add(`player${currentPlayer}`);
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    const resetBoard = () => {
+    const resetBoard = function() {
         board = ['', '', '', '', '', '', '', '', ''];
         isGameActive = true;
         announcer.classList.add('hide');
@@ -118,14 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
             changePlayer();
         }
 
-        tiles.forEach(tile => {
+        tiles.forEach(function(tile) {
             tile.innerText = '';
             tile.classList.remove('playerX');
             tile.classList.remove('playerO');
         });
     }
 
-    tiles.forEach( (tile, index) => {
+    tiles.forEach(function (tile, index) {
         tile.addEventListener('click', () => userAction(tile, index));
     });
 
