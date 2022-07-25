@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resetButton = document.querySelector('.retry'),
         show=document.querySelector('.mess'),
         quit=document.querySelector('.quit'),
+        nxt=document.querySelector('.next'),
         announcer = document.querySelector('.winner');
 
     let board = ['', '', '', '', '', '', '', '', ''];
@@ -76,6 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     quit.addEventListener('click',function(e){
         window.location.href ='https://www.google.com'
+    })
+
+    nxt.addEventListener('click',function(e){
+        resetBoard()
+        show.style.display='none'
     })
 
     const isValidAction = function(tile) {
