@@ -94,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tile.innerText === 'X' || tile.innerText === 'O'){
             return false;
         }
-
         return true;
     };
 
@@ -118,6 +117,16 @@ document.addEventListener('DOMContentLoaded', () => {
             updateBoard(index);
             handleResultValidation();
             changePlayer();
+        }
+        
+        if(tile.innerText == 'X'){
+            tile.style.color="rgb(44, 198, 190)"
+
+            //console.log('true')
+        }else{
+            tile.style.color="rgb(241, 177, 53)"
+
+            //console.log('Wrong')
         }
     }
     
